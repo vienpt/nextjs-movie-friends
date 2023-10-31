@@ -5,6 +5,7 @@ import '@radix-ui/themes/styles.css'
 import React from "react";
 import {Box, Theme } from '@radix-ui/themes'
 import SiteHeader from "@/components/site-header";
+import {cn} from "@/lib/utils";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className, "min-h-screen mx-auto max-w-screen-xl")}>
         <Theme
             accentColor="mint"
             grayColor="gray"
@@ -28,7 +29,7 @@ export default function RootLayout({
             scaling="100%"
             radius="medium"
         >
-          <main className="relative flex flex-col min-h-screen max-w-screen-xl p-4">
+          <main className="relative min-h-screen flex flex-col p-4">
             <SiteHeader />
             <Box display="block" className="py-10">{children}</Box>
           </main>
