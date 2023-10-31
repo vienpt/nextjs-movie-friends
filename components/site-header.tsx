@@ -1,4 +1,4 @@
-import {Box, Button, Flex, Grid} from "@radix-ui/themes";
+import {Box, Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
 
 export default function SiteHeader() {
