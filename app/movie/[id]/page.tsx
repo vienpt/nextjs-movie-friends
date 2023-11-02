@@ -1,7 +1,7 @@
 "use client"
 import {getMovieDetail} from "@/api/movies/[id]/route";
 import {usePathname} from 'next/navigation'
-import {useEffect, useState} from "react";
+import {JSX, useEffect, useState} from "react";
 import {Genres, MovieDetail} from "@/type";
 import {Button, Grid, Heading, Inset, Section} from "@radix-ui/themes";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
@@ -76,10 +76,8 @@ export default function MovieDetailPage() {
                                             <Heading as="h3" size="5">Genres</Heading>
                                             <div className="inline-flex">
                                                 {data?.genres?.map((genre: Genres) => (
-                                                    <div key={genre.id}>{genre.name}</div>
-                                                )).reduce((prev: any, curr: any) => {
-                                                    return [prev, ',', curr]
-                                                })}
+                                                    <div key={genre.id}>{genre.name.concat(', ')}</div>
+                                                ))}
                                             </div>
                                             <Heading as="h3" size="5">Release date</Heading>
                                             <p className="mr-5">{data?.releaseDate}</p>

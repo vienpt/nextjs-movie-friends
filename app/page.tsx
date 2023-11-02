@@ -5,7 +5,7 @@ import {Card, CardContent, CardDescription, CardFooter, CardTitle} from "@/compo
 import {Movie} from "@/type";
 import Image from "next/image";
 
-export async function fetchData() {
+async function fetchData() {
     const res = await getMovie()
     if (!res.ok) {
         throw new Error('Failed to fetch data')
@@ -15,7 +15,7 @@ export async function fetchData() {
 }
 export default async function Home() {
     const data = await fetchData()
-    console.log(data)
+
     return (
         <Grid className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
             {data.map((item: Movie) => (
