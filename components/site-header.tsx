@@ -1,4 +1,4 @@
-import {Box, Button, Flex } from "@radix-ui/themes";
+import {Button, Flex, Heading} from "@radix-ui/themes";
 import Link from "next/link";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {getProfile} from "@/api/profile/route";
@@ -18,10 +18,16 @@ export default async function SiteHeader() {
     const data = await fetchData() as Profile
     return (
         <Flex direction="row" justify="between" align="center">
-            <Flex display="inline-flex" gap="3">
-                <Link href="/">logo here</Link>
-                <Link href={'/popular'}>Popular</Link>
-                <Link href={'/upcoming'}>Upcoming</Link>
+            <Flex className="inline-flex items-center gap-3">
+                <Link href="/">
+                    <Heading as="h1" size="5" color="mint">Movie Friends</Heading>
+                </Link>
+                <Link href={'/popular'}>
+                    <Heading as="h1" size="4">Popular</Heading>
+                </Link>
+                <Link href={'/upcoming'}>
+                    <Heading as="h1" size="4">Upcoming</Heading>
+                </Link>
             </Flex>
             <Flex className="inline-flex items-center space-x-3">
                 <Popover>
@@ -37,7 +43,6 @@ export default async function SiteHeader() {
                         </div>
                     </PopoverContent>
                 </Popover>
-
 
                 <Button>Login</Button>
             </Flex>

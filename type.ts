@@ -18,6 +18,18 @@ export interface MovieDetail extends Movie{
     popularity: number
 }
 
+export interface Popular extends MovieDetail {
+    voteAverage: number
+    voteCount: number
+}
+
+export interface Upcoming extends MovieDetail {
+    dates: {
+        maximum: string,
+        minimum: string
+    },
+}
+
 export interface Avatar {
     gravatar: {
         hash: string

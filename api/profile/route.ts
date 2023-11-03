@@ -10,6 +10,13 @@ export async function getProfile() {
         },
     })
     const data = await res.json()
+    if (!data) {
+        return new Response(
+            JSON.stringify({ message: data.status_message }),
+            { status: res.status }
+        );
+    }
+
     const parseProfileData = {
         id: data.id,
         userName: data.username,

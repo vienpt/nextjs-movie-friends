@@ -10,6 +10,13 @@ export async function getMovieDetail(id : number) : Promise<Response> {
         },
     })
     const data = await res.json()
+
+    if (!data) {
+        return new Response(
+            JSON.stringify({ message: data.status_message }),
+            { status: res.status }
+        );
+    }
     const parseMovieDetailData = {
         ...data,
         id: data.id,

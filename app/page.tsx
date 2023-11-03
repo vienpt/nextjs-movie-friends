@@ -7,10 +7,6 @@ import Image from "next/image";
 
 async function fetchData() {
     const res = await getMovie()
-    if (!res.ok) {
-        throw new Error('Failed to fetch data')
-    }
-
     return res.json()
 }
 export default async function Home() {

@@ -1,7 +1,7 @@
 "use client"
 import {getMovieDetail} from "@/api/movies/[id]/route";
 import {usePathname} from 'next/navigation'
-import {JSX, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {Genres, MovieDetail} from "@/type";
 import {Button, Grid, Heading, Inset, Section} from "@radix-ui/themes";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
@@ -16,25 +16,32 @@ export default function MovieDetailPage() {
 
     useEffect(() => {
         if (pathname) {
-            setLoading(true)
             // @ts-ignore
             const id = +pathname.split('/movie/')?.at(1)
-
-            getMovieDetail(id)
-                .then((res) => res.json())
-                .then((json) => {
-                    setData(json)
-                })
-            return () => {
-                setLoading(false)
+            if (!data) {
+                getData(id).then()
             }
         }
+    }, [data, pathname])
 
-    }, [loading, pathname])
+    async function getData(id: number) : Promise<void> {
+        try {
+            setLoading(true)
+            const response = await getMovieDetail(id)
+            const result = await response.json()
+            setData(result)
+        } catch(error) {
+            if (error !== undefined) {
+                throw new Error("Failed in some way")
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <Section>
-            {!data
+            {loading
                 ?
                     <>
                         <SkeletonMovieDetail />
@@ -48,23 +55,23 @@ export default function MovieDetailPage() {
                                         <Image
                                             alt={`${data?.title}`}
                                             src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_DOMAIN_ORIGINAL}${data?.backdropPath}`}
-                                            width={800}
+                                            width={960}
                                             height={500}
                                             placeholder={'empty'}
-                                            loading={'lazy'}
+                                            priority
                                             quality={75}
                                             style={{
-                                                borderRadius: '2% 2% 0 0',
+                                                borderRadius: '2%',
                                                 border: '1px solid #fff',
                                                 aspectRatio: '3/2',
-                                                height: 500,
+                                                minHeight: 500,
                                                 objectFit: 'cover'
                                             }}
                                         />
                                     </Inset>
                                 </Card>
                             </div>
-                            <div className="md:col-span-2">
+                            <div className="md:col-span-2 h-[500px]">
                                 <Card>
                                     <CardHeader>
                                         <Heading as="h1" size="9">{data?.title}</Heading>
