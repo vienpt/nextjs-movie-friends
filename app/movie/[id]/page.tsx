@@ -1,38 +1,20 @@
-"use client"
-
-import {getMovieDetail} from "@/api/movies/[id]/route";
-import {usePathname} from 'next/navigation'
-import {useEffect, useState} from "react";
-import {Genres, MovieDetail} from "@/type";
+import {Genres} from "@/type";
 import {Button, Grid, Heading, Inset, Section} from "@radix-ui/themes";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import SkeletonMovieDetail from "@/components/skeleton-movie-detail";
+import Item, {preloadMovieItemById} from "@/components/movie-item-detail-preload";
+import {notFound} from "next/navigation";
 
-export default function MovieDetailPage() {
-    const pathName = usePathname()
-    const [data, setData] = useState<MovieDetail>()
+export default async function MovieDetailPage({params: { id }}: { params: { id: number } }) {
+    // starting loading item data
+    preloadMovieItemById(id)
 
-    useEffect(() => {
-        if (pathName) {
-            const segmentId = +pathName.split('/')[2]
-            if (!data) {
-                getData(segmentId).then()
-            }
-        }
-    }, [data, pathName])
+    const data = await Item({ id })
 
-    async function getData(id: number) : Promise<void> {
-        try {
-            const response = await getMovieDetail(id)
-            const result = await response.json()
-            setData(result)
-        } catch(error) {
-            if (error !== undefined) {
-                throw new Error("Failed in some way")
-            }
-        }
+    if (data.id === undefined || data.success) {
+        notFound()
     }
 
     return (
