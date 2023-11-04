@@ -23,6 +23,11 @@ export interface Popular extends MovieDetail {
     voteCount: number
 }
 
+export interface Trending extends MovieDetail {
+    voteAverage: number
+    voteCount: number
+}
+
 export interface Upcoming extends MovieDetail {
     dates: {
         maximum: string,
