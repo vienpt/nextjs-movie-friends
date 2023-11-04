@@ -1,4 +1,5 @@
 "use client"
+
 import {getMovieDetail} from "@/api/movies/[id]/route";
 import {usePathname} from 'next/navigation'
 import {useEffect, useState} from "react";
@@ -10,23 +11,20 @@ import Image from "next/image";
 import SkeletonMovieDetail from "@/components/skeleton-movie-detail";
 
 export default function MovieDetailPage() {
-    const pathname = usePathname()
-    const [loading, setLoading] = useState(false)
+    const pathName = usePathname()
     const [data, setData] = useState<MovieDetail>()
 
     useEffect(() => {
-        if (pathname) {
-            // @ts-ignore
-            const id = +pathname.split('/movie/')?.at(1)
+        if (pathName) {
+            const segmentId = +pathName.split('/')[2]
             if (!data) {
-                getData(id).then()
+                getData(segmentId).then()
             }
         }
-    }, [data, pathname])
+    }, [data, pathName])
 
     async function getData(id: number) : Promise<void> {
         try {
-            setLoading(true)
             const response = await getMovieDetail(id)
             const result = await response.json()
             setData(result)
@@ -34,14 +32,12 @@ export default function MovieDetailPage() {
             if (error !== undefined) {
                 throw new Error("Failed in some way")
             }
-        } finally {
-            setLoading(false)
         }
     }
 
     return (
         <Section>
-            {loading
+            {!data
                 ?
                     <>
                         <SkeletonMovieDetail />
@@ -54,7 +50,7 @@ export default function MovieDetailPage() {
                                     <Inset clip="padding-box" side="top" pb="current">
                                         <Image
                                             alt={`${data?.title}`}
-                                            src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_DOMAIN_ORIGINAL}${data?.backdropPath}`}
+                                            src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_DOMAIN_ORIGINAL}/${data?.backdropPath}`}
                                             width={960}
                                             height={500}
                                             placeholder={'empty'}
@@ -81,9 +77,12 @@ export default function MovieDetailPage() {
                                             <Heading as="h3" size="5">Description</Heading>
                                             <p>{data?.overview}</p>
                                             <Heading as="h3" size="5">Genres</Heading>
-                                            <div className="inline-flex">
-                                                {data?.genres?.map((genre: Genres) => (
-                                                    <div key={genre.id}>{genre.name.concat(', ')}</div>
+                                            <div className="inline-flex space-x-1">
+                                                {data.genres?.map((genre: Genres, index: number) => (
+                                                    <div key={genre.id}>
+                                                        {genre.name}
+                                                        {index < data.genres.length - 1 && ','}
+                                                    </div>
                                                 ))}
                                             </div>
                                             <Heading as="h3" size="5">Release date</Heading>

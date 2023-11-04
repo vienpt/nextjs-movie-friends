@@ -13,7 +13,7 @@ export interface Genres {
 
 export interface MovieDetail extends Movie{
     imdb_id: string
-    genres?: Array<Genres>
+    genres: Array<Genres>
     releaseDate: string
     popularity: number
 }
