@@ -5,23 +5,46 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Architect
+- TailwindCss for CSS
+- Radix-UI for style component: https://www.radix-ui.com/themes/docs/overview/getting-started
+- Shacdn-UI for component UI: https://ui.shadcn.com/
+- Supabase for authenticate: https://supabase.com/docs/guides/auth/auth-helpers/nextjs
+- Nextjs14 using App router: https://nextjs.org/docs
 
 ## Setup
 
-- Install component ui: https://ui.shadcn.com/docs/installation/next
+- Init project by CLI: `npx create-next-app` (typescript)
 
+### project structure
+
+- `api`: use `Route handler`
+- `app`: App Router
+- `components`:
+  - ui: for import shadcn-ui
+  - app components
+- `lib`: tailwindcss util for merge utility class
+- `utils`:
+  - get-item: following `preload` pattern Nextjs for fetch slug item: https://nextjs.org/docs/app/building-your-application/data-fetching/patterns#preloading-data
+  - `supabase`: authenticate https://supabase.com/docs/guides/auth/auth-helpers/nextjs
+
+- `env` file:
+  - create `.env`
+
+```dotenv
+NEXT_PUBLIC_IMDB_URL=https://www.imdb.com
+NEXT_PUBLIC_TMDB_IMAGE_DOMAIN_ORIGINAL=https://image.tmdb.org/t/p/original
+NEXT_PUBLIC_TMDB_API_URL_VER_3=https://api.themoviedb.org/3
+NEXT_PUBLIC_TMDB_API_READ_ACCESS_TOKEN=<access_token>
+NEXT_PUBLIC_SUPABASE_URL=<url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<key>
+```
 
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Link: https://nextjs-movie-friends.vercel.app/
