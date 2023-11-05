@@ -42,6 +42,7 @@ NEXT_PUBLIC_TMDB_API_URL_VER_3=https://api.themoviedb.org/3
 NEXT_PUBLIC_TMDB_API_READ_ACCESS_TOKEN=<access_token>
 NEXT_PUBLIC_SUPABASE_URL=<url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<key>
+NEXT_PUBLIC_REDIRECT_TO=<url_callback>
 ```
 
 ## TODO (remain)
