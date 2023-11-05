@@ -44,6 +44,11 @@ NEXT_PUBLIC_SUPABASE_URL=<url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<key>
 ```
 
+## TODO (remain)
+
+- Search func
+- Testing
+
 
 ## Deploy on Vercel
 
