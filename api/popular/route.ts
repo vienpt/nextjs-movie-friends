@@ -1,29 +1,12 @@
 import {Popular, Trending} from "@/type";
+import {UseLazyFetch} from "@/api";
 
 export async function getPopular() {
-    const apiUrl = process.env.NEXT_PUBLIC_TMDB_API_URL_VER_3
-
     try {
-        const resPopular = await fetch(`${apiUrl}/movie/popular?language=en-US&page=1`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_READ_ACCESS_TOKEN}`
-            },
-        })
+        const data = await UseLazyFetch('/movie/popular?language=en-US&page=1')
 
-        const dataPopular = await resPopular.json()
-
-        if (!dataPopular) {
-            return new Response(
-                JSON.stringify({ message: dataPopular.status_message }),
-                { status: dataPopular.status }
-            )
-        }
-
-        const parsePopularData = dataPopular?.results?.map((item: any) => {
+        const parsePopularData = data?.results?.map((item: any) => {
             return {
-                ...item,
                 id: item.id,
                 title: item.title,
                 overview: item.overview,
@@ -38,7 +21,7 @@ export async function getPopular() {
             } as Popular
         })
 
-        return Response.json({ parsePopularData })
+        return Response.json(parsePopularData)
     } catch (err) {
         console.error(err)
         throw new Error('Api call failed')
@@ -47,29 +30,11 @@ export async function getPopular() {
 }
 
 export async function getTrending() {
-    const apiUrl = process.env.NEXT_PUBLIC_TMDB_API_URL_VER_3
-
     try {
-        const resTrending = await fetch(`${apiUrl}/trending/movie/day?language=en-US`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_READ_ACCESS_TOKEN}`
-            },
-        })
+        const data = await UseLazyFetch('/trending/movie/day?language=en-US')
 
-        const dataTrending = await resTrending.json()
-
-        if (!dataTrending) {
-            return new Response(
-                JSON.stringify({ message:  dataTrending.status_message }),
-                { status: dataTrending.status }
-            )
-        }
-
-        const parseTrendingData = dataTrending?.results?.map((item: any) => {
+        const parseTrendingData = data?.results?.map((item: any) => {
             return {
-                ...item,
                 id: item.id,
                 title: item.title,
                 overview: item.overview,
@@ -84,7 +49,7 @@ export async function getTrending() {
             } as Trending
         })
 
-        return Response.json({ parseTrendingData })
+        return Response.json(parseTrendingData)
     } catch (err) {
         console.error(err)
         throw new Error('Api call failed')

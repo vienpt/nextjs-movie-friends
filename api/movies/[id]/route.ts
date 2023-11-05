@@ -1,24 +1,10 @@
 import {MovieDetail} from "@/type";
+import {UseLazyFetch} from "@/api";
 
 export async function getMovieDetail(id : number) : Promise<Response> {
-    const apiUrl = process.env.NEXT_PUBLIC_TMDB_API_URL_VER_3
-
     try {
-        const res = await fetch(`${apiUrl}/movie/${id}?language=en-US`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_READ_ACCESS_TOKEN}`
-            },
-        })
-        const data = await res.json()
+        const data = await UseLazyFetch(`/movie/${id}?language=en-US`)
 
-        if (!data) {
-            return new Response(
-                JSON.stringify({ message: data.status_message }),
-                { status: res.status }
-            );
-        }
         const parseMovieDetailData = {
             ...data,
             id: data.id,

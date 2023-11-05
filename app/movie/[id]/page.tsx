@@ -1,5 +1,5 @@
 import {Genres} from "@/type";
-import {Button, Grid, Heading, Inset, Section} from "@radix-ui/themes";
+import {Button, Grid, Heading, Inset} from "@radix-ui/themes";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";

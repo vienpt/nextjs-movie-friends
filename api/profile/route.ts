@@ -1,23 +1,9 @@
 import {Profile} from "@/type";
+import {UseLazyFetch} from "@/api";
 
 export async function getProfile() {
-    const apiUrl = process.env.NEXT_PUBLIC_TMDB_API_URL_VER_3
-
     try {
-        const res = await fetch(`${apiUrl}/account/${process.env.NEXT_PUBLIC_TMDB_ACCOUNT_ID}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_READ_ACCESS_TOKEN}`
-            },
-        })
-        const data = await res.json()
-        if (!data) {
-            return new Response(
-                JSON.stringify({ message: data.status_message }),
-                { status: res.status }
-            );
-        }
+        const data = await UseLazyFetch(`/account/${process.env.NEXT_PUBLIC_TMDB_ACCOUNT_ID}`)
 
         const parseProfileData = {
             id: data.id,
