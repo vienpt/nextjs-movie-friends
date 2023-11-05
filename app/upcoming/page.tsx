@@ -3,7 +3,7 @@ import {Flex, Grid, Heading} from "@radix-ui/themes";
 import {Movie} from "@/type";
 import React, {Suspense} from "react";
 import MovieItem from "@/components/movie-item";
-import Loading from "@/app/loading";
+import Loading from "@/app/upcoming/loading";
 
 async function fetchData() {
     const res = await getUpcoming()
@@ -24,13 +24,13 @@ export default async function UpcomingPage() {
                 </Heading>
             </Flex>
 
-            <Grid className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
-                <Suspense fallback={<Loading />}>
+            <Suspense fallback={<Loading />}>
+                <Grid className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
                     {data.parseTrendingData?.map((item: Movie) => (
                         <MovieItem key={item.id} movie={item} />
                     ))}
-                </Suspense>
-            </Grid>
+                </Grid>
+            </Suspense>
         </>
 
     )

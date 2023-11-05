@@ -24,21 +24,21 @@ export default async function PopularPage() {
 
     return (
         <Grid columns="undefined" gap="8">
-            <PopularItem title="Popular movies">
-                <Suspense fallback={<Loading />}>
+            <Suspense fallback={<Loading />}>
+                <PopularItem title="Popular movies">
                     {popular.parsePopularData.map((item: Popular) => (
                         <MovieItem key={item.id} movie={item} className={'w-[350px]'} />
                     ))}
-                </Suspense>
-            </PopularItem>
+                </PopularItem>
+            </Suspense>
 
-            <PopularItem title="Trending movies">
-                <Suspense fallback={<Loading />}>
+            <Suspense fallback={<Loading />}>
+                <PopularItem title="Trending movies">
                     {trending.parseTrendingData?.map((item: Popular) => (
                         <MovieItem key={item.id} movie={item} className={'w-[350px]'} />
                     ))}
-                </Suspense>
-            </PopularItem>
+                </PopularItem>
+            </Suspense>
         </Grid>
     )
 }
