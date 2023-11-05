@@ -1,12 +1,8 @@
 'use client'
-
-import Link from "next/link";
+import {Heading} from "@radix-ui/themes";
 
 export default function UnAuthenticatedPage() {
     return (
-        <>
-            <h2>Please login</h2>
-            <Link href={'/'}>Back</Link>
-        </>
+        <Heading as="h1" size="2">Please login</Heading>
     )
 }
