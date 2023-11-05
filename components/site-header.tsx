@@ -5,7 +5,7 @@ import AuthButton from "@/components/auth-button";
 export default function SiteHeader() {
     return (
         <Flex direction="row" justify="between" align="center">
-            <Flex className="inline-flex items-center gap-3">
+            <Flex className="flex flex-wrap items-center gap-3">
                 <Link href="/">
                     <Heading as="h1" size="3" color="mint">Movie Friends</Heading>
                 </Link>
