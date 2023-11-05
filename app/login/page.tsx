@@ -1,4 +1,4 @@
-import { headers, cookies } from 'next/headers'
+import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { Input } from '@/components/ui/input'
@@ -33,7 +33,6 @@ export default function Login({
     const signUp = async (formData: FormData) => {
         'use server'
 
-        const origin = headers().get('origin')
         const email = formData.get('email') as string
         const password = formData.get('password') as string
         const cookieStore = cookies()
@@ -43,7 +42,7 @@ export default function Login({
             email,
             password,
             options: {
-                emailRedirectTo: `${origin}/auth/callback`,
+                emailRedirectTo: `${process.env.NEXT_PUBLIC_REDIRECT_TO}/auth/callback`,
             },
         })
 
